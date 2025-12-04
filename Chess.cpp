@@ -6,6 +6,8 @@ using namespace std;
 
 void displayBoard(const vector<string>& chessBoard);
 void initalizeBoard(vector<string>& chessBoard);
+void player1Move();
+void player2Move();
 
 int main()
 {
@@ -36,7 +38,13 @@ void initalizeBoard(vector<string>& chessBoard) {
     chessBoard[7] = "RNBQKBNR";
 }
 void player1Move() {
-    
+    string move;
+    cout << "Player 1, enter your move(format: e2 e4): "; 
+    getline(cin, move);
+    string letterFrom = move.substr(0,1);
+    string letterTo = move.substr(3,1);
+
+
 }
 void player2Move() {
     
