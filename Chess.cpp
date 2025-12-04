@@ -44,6 +44,66 @@ void player1Move() {
     string letterFrom = move.substr(0,1);
     string letterTo = move.substr(3,1);
 
+    char numberFrom = move[1];
+    char numberTo = move[4];
+
+    int NumberFrom = numberFrom - 1;
+    int NumberFrom = numberTo - 1;
+
+    int LetterFrom;
+    int LetterTo;
+    switch (letterFrom[0]) {
+        case 'a': 
+            LetterFrom = 0;
+        break;
+        case 'b':
+            LetterFrom = 1;
+        break;
+        case 'c':
+            LetterFrom = 2;
+        break;
+        case 'd':
+            LetterFrom = 3;
+        break;
+        case 'e':
+            LetterFrom = 4;
+        break;
+        case 'f':
+            LetterFrom = 5;
+        break;
+        case 'g':
+            LetterFrom = 6;
+        break;
+        case 'h':
+            LetterFrom = 7;
+        break;    
+    }
+    switch(letterTo[0]) {
+        case 'a': 
+            LetterTo = 0;
+        break;
+        case 'b':
+            LetterTo = 1;
+        break;
+        case 'c':
+            LetterTo = 2;
+        break;
+        case 'd':
+            LetterTo = 3;
+        break;
+        case 'e':
+            LetterTo = 4;
+        break;
+        case 'f':
+            LetterTo = 5;
+        break;
+        case 'g':
+            LetterTo = 6;
+        break;
+        case 'h':
+            LetterTo = 7;
+        break;    
+    }
 
 }
 void player2Move() {
