@@ -220,3 +220,116 @@ bool gameOver(vector<string>& chessBoard){
         return true;
     }
 }
+void legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
+    int N = chessBoard[numberFrom + 1][letterFrom];
+    int S = chessBoard[numberFrom - 1][letterFrom];
+    int W = chessBoard[numberFrom][letterFrom - 1];
+    int E = chessBoard[numberFrom][letterFrom +1];
+    int NW = chessBoard[numberFrom + 1][ letterFrom - 1];
+    int SW = chessBoard[numberFrom - 1][letterFrom - 1];
+    int SE = chessBoard[numberFrom - 1][letterFrom + 1];
+    int NE = chessBoard[numberFrom + 1][letterFrom + 1];  
+
+    if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
+        if (N != '.'){
+            if (numberFrom < numberTo){
+
+            }
+        }
+        else if (S != '.'){
+            if (numberFrom > numberTo){
+
+            }
+        }
+        else if (E != '.'){
+            if (letterFrom < letterTo){
+
+            }
+        }
+        else if (W != '.'){
+            if (letterFrom > letterTo){
+
+            }
+        }
+    }
+    if (chessBoard[numberFrom][letterFrom]== 'n' || chessBoard[numberFrom][letterFrom]== 'N' ){
+        
+    }
+    if (chessBoard[numberFrom][letterFrom]== 'b' || chessBoard[numberFrom][letterFrom]== 'B' ){
+        if (NW != '.'){
+
+        }
+        else if (SW != '.'){
+
+        }
+        else if (SE != '.'){
+
+        }
+        else if (NE != '.'){
+
+        }
+    }
+    if (chessBoard[numberFrom][letterFrom]== 'q' || chessBoard[numberFrom][letterFrom]== 'Q' ){
+        if (N != '.'){
+
+        }
+        else if (S != '.'){
+
+        }
+        else if (E != '.'){
+
+        }
+        else if (W != '.'){
+
+        }
+        else if (NW != '.'){
+
+        }
+        else if (SW != '.'){
+
+        }
+        else if (SE != '.'){
+
+        }
+        else if (NE != '.'){
+
+        }
+    }
+    if (chessBoard[numberFrom][letterFrom]== 'k' || chessBoard[numberFrom][letterFrom]== 'K' ){
+        if (N != '.'){
+
+        }
+        else if (S != '.'){
+
+        }
+        else if (E != '.'){
+
+        }
+        else if (W != '.'){
+
+        }
+        else if (NW != '.'){
+
+        }
+        else if (SW != '.'){
+
+        }
+        else if (SE != '.'){
+
+        }
+        else if (NE != '.'){
+
+        }
+    }
+    if (chessBoard[numberFrom][letterFrom]== 'p' || chessBoard[numberFrom][letterFrom]== 'P' ){
+        if (N != '.'){
+
+        }
+        else if (NE != '.'){
+
+        }
+        else if (NW != '.'){
+
+        }
+    }
+}
