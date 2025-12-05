@@ -8,18 +8,28 @@ void displayBoard(const vector<string>& chessBoard);
 void initalizeBoard(vector<string>& chessBoard);
 void player1Move(vector<string>& chessBoard);
 void player2Move(vector<string>& chessBoard);
-
+bool gameOver(vector<string>& chessBoard);
 int main()
 {
+    
     vector<string> chessBoard(8, string(8, '.'));
     initalizeBoard(chessBoard);
-    displayBoard(chessBoard);
-    player1Move(chessBoard);
-    displayBoard(chessBoard);
-    player2Move(chessBoard);
-    displayBoard(chessBoard);
+    bool gameover = gameOver(chessBoard);
+    while (!gameover) {
+        displayBoard(chessBoard);
+        player1Move(chessBoard);
+        displayBoard(chessBoard);
+        gameover = gameOver(chessBoard);
+        if (!gameover){
+            player2Move(chessBoard);
+            displayBoard(chessBoard);
+            gameOver(chessBoard);
+            gameover = gameOver(chessBoard);
+        }
+        system("clear");
+    }
 
-
+    gameOver(chessBoard);
     return 0;
 }
 
@@ -184,4 +194,29 @@ void player2Move(vector<string>& chessBoard) {
 
     chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
     chessBoard[numberFrom][LetterFrom] = '.';
+}
+bool gameOver(vector<string>& chessBoard){
+    int whiteWin = 0;
+    int blackWin = 0;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (chessBoard[i][j] == 'k'){
+                whiteWin = 1;
+            }
+            if (chessBoard[i][j] == 'K'){
+                blackWin = 1;
+            }
+        }
+    }
+    if (whiteWin == blackWin){
+        return false;
+    }
+    else if (whiteWin == 0){
+        cout << "Player 1 wins!" << endl;
+        return true;
+    }
+    else if (blackWin == 0){
+        cout << "Player 2 wins!" << endl;
+        return true;
+    }
 }
