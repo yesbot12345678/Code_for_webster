@@ -9,15 +9,23 @@ void initalizeBoard(vector<string>& chessBoard);
 void player1Move(vector<string>& chessBoard);
 void player2Move(vector<string>& chessBoard);
 bool gameOver(vector<string>& chessBoard);
+void legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo);
 int main()
-{
-    
+{    
     vector<string> chessBoard(8, string(8, '.'));
     initalizeBoard(chessBoard);
     bool gameover = gameOver(chessBoard);
+    int numberFrom;
+    int numberTo;
+    int letterFrom;
+    int letterTo;
     while (!gameover) {
         displayBoard(chessBoard);
         player1Move(chessBoard);
+
+        // need to assign the cords of the move somehow
+        
+        legalMove(chessBoard, letterFrom, letterTo, numberFrom, numberTo);
         displayBoard(chessBoard);
         gameover = gameOver(chessBoard);
         if (!gameover){
@@ -28,11 +36,9 @@ int main()
         }
         system("clear");
     }
-
     gameOver(chessBoard);
     return 0;
 }
-
 void displayBoard(const vector<string>& chessBoard) {
     cout << "   a b c d e f g h\n";
     cout << " +-----------------+\n";
@@ -117,9 +123,8 @@ void player1Move(vector<string>& chessBoard) {
         break;
         case 'h':
             LetterTo = 7;
-        break;    
+        break;
     }
-
     chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
     chessBoard[numberFrom][LetterFrom] = '.';
 }
@@ -221,115 +226,157 @@ bool gameOver(vector<string>& chessBoard){
     }
 }
 void legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
-    int N = chessBoard[numberFrom + 1][letterFrom];
-    int S = chessBoard[numberFrom - 1][letterFrom];
-    int W = chessBoard[numberFrom][letterFrom - 1];
-    int E = chessBoard[numberFrom][letterFrom +1];
-    int NW = chessBoard[numberFrom + 1][ letterFrom - 1];
-    int SW = chessBoard[numberFrom - 1][letterFrom - 1];
-    int SE = chessBoard[numberFrom - 1][letterFrom + 1];
-    int NE = chessBoard[numberFrom + 1][letterFrom + 1];  
+    if (numberFrom < 7 && numberTo < 7 && letterFrom < 7 && letterTo <7){
+        int N = chessBoard[numberFrom + 1][letterFrom];
+        int S = chessBoard[numberFrom - 1][letterFrom];
+        int W = chessBoard[numberFrom][letterFrom - 1];
+        int E = chessBoard[numberFrom][letterFrom +1];
+        int NW = chessBoard[numberFrom + 1][ letterFrom - 1];
+        int SW = chessBoard[numberFrom - 1][letterFrom - 1];
+        int SE = chessBoard[numberFrom - 1][letterFrom + 1];
+        int NE = chessBoard[numberFrom + 1][letterFrom + 1];  
 
-    if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
-        if (N != '.'){
-            if (numberFrom < numberTo){
-
+        if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
+            if (numberFrom < numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (letterFrom < letterTo && numberFrom == numberTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (letterFrom > letterTo && numberFrom == numberTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
             }
         }
-        else if (S != '.'){
-            if (numberFrom > numberTo){
-
+        if (chessBoard[numberFrom][letterFrom]== 'n' || chessBoard[numberFrom][letterFrom]== 'N' ){
+            if (numberFrom + 3 == numberTo && letterFrom - 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 3 == numberTo && letterFrom + 1 == letterFrom){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom + 3 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom + 3 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 3 == numberTo && letterFrom + 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 3 == numberTo && letterFrom - 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom - 3 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom - 3 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
             }
         }
-        else if (E != '.'){
-            if (letterFrom < letterTo){
-
+        if (chessBoard[numberFrom][letterFrom]== 'b' || chessBoard[numberFrom][letterFrom]== 'B' ){
+            if (numberFrom < numberTo && letterFrom > letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom > letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom < letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom < numberTo && letterFrom < letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
             }
         }
-        else if (W != '.'){
-            if (letterFrom > letterTo){
+        if (chessBoard[numberFrom][letterFrom]== 'q' || chessBoard[numberFrom][letterFrom]== 'Q' ){
+            if (numberFrom < numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom == numberTo && letterFrom < letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom == numberTo && letterFrom > letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom < numberTo && letterFrom > letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom > letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom > numberTo && letterFrom < letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom < numberTo && letterFrom < letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
+            }
+        }
+        if (chessBoard[numberFrom][letterFrom]== 'k' || chessBoard[numberFrom][letterFrom]== 'K' ){
+            if (numberFrom + 1 == numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }            
+            else if (numberFrom - 1 == numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom == numberTo && letterFrom + 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom == numberTo && letterFrom - 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom - 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom - 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
+            }
 
+        }
+        if (chessBoard[numberFrom][letterFrom]== 'p' || chessBoard[numberFrom][letterFrom]== 'P' ){
+            if (numberFrom + 1 == numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom == letterTo){
+                chessBoard[numberTo][letterTo] = chessBoard[numberFrom][letterFrom];
+            }
+            else {
+                cout << "you did not enter a valid move\n";
             }
         }
     }
-    if (chessBoard[numberFrom][letterFrom]== 'n' || chessBoard[numberFrom][letterFrom]== 'N' ){
-        
-    }
-    if (chessBoard[numberFrom][letterFrom]== 'b' || chessBoard[numberFrom][letterFrom]== 'B' ){
-        if (NW != '.'){
-
-        }
-        else if (SW != '.'){
-
-        }
-        else if (SE != '.'){
-
-        }
-        else if (NE != '.'){
-
-        }
-    }
-    if (chessBoard[numberFrom][letterFrom]== 'q' || chessBoard[numberFrom][letterFrom]== 'Q' ){
-        if (N != '.'){
-
-        }
-        else if (S != '.'){
-
-        }
-        else if (E != '.'){
-
-        }
-        else if (W != '.'){
-
-        }
-        else if (NW != '.'){
-
-        }
-        else if (SW != '.'){
-
-        }
-        else if (SE != '.'){
-
-        }
-        else if (NE != '.'){
-
-        }
-    }
-    if (chessBoard[numberFrom][letterFrom]== 'k' || chessBoard[numberFrom][letterFrom]== 'K' ){
-        if (N != '.'){
-
-        }
-        else if (S != '.'){
-
-        }
-        else if (E != '.'){
-
-        }
-        else if (W != '.'){
-
-        }
-        else if (NW != '.'){
-
-        }
-        else if (SW != '.'){
-
-        }
-        else if (SE != '.'){
-
-        }
-        else if (NE != '.'){
-
-        }
-    }
-    if (chessBoard[numberFrom][letterFrom]== 'p' || chessBoard[numberFrom][letterFrom]== 'P' ){
-        if (N != '.'){
-
-        }
-        else if (NE != '.'){
-
-        }
-        else if (NW != '.'){
-
-        }
+    else {
+        cout << "you did not enter a valid move\n";
     }
 }
