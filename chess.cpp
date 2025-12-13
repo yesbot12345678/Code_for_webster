@@ -54,6 +54,12 @@ void player1Move(vector<string>& chessBoard) {
     while (done == 0){
         cout << "Player 1, enter your move(format: e2 e4): "; 
         getline(cin, move);
+        
+        if (move.length() < 5) {
+            cout << "you did not enter a valid move\n";
+            continue;
+        }
+        
         string letterFrom = move.substr(0,1);
         string letterTo = move.substr(3,1);
 
@@ -63,6 +69,11 @@ void player1Move(vector<string>& chessBoard) {
         int numberTo = TO - '0';
         numberFrom -= 1;
         numberTo -= 1;
+
+        if (numberFrom < 0 || numberFrom > 7 || numberTo < 0 || numberTo > 7) {
+            cout << "you did not enter a valid move\n";
+            continue;
+        }
 
         int LetterFrom = -1;
         int LetterTo = -1;
@@ -125,6 +136,13 @@ void player1Move(vector<string>& chessBoard) {
         }
         else{
             cout << "you did not enter a valid move\n";
+            continue;
+        }
+        if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
+            cout << "Player 1 promote to (Q Or N): ";
+            char promoteTo;
+            cin >> promoteTo;
+            chessBoard[numberTo][LetterTo] = promoteTo;
         }
     }
 }
@@ -134,6 +152,12 @@ void player2Move(vector<string>& chessBoard) {
     while (done == 0){
         cout << "Player 2, enter your move(format: e2 e4): "; 
         getline(cin, move);
+
+        if (move.length() < 5) {
+            cout << "you did not enter a valid move\n";
+            continue;
+        }
+        
         string letterFrom = move.substr(0,1);
         string letterTo = move.substr(3,1);
 
@@ -143,6 +167,11 @@ void player2Move(vector<string>& chessBoard) {
         int numberTo = TO - '0';
         numberFrom -= 1;
         numberTo -= 1;
+               
+        if (numberFrom < 0 || numberFrom > 7 || numberTo < 0 || numberTo > 7) {
+            cout << "you did not enter a valid move\n";
+            continue;
+        }
 
         int LetterFrom = -1;
         int LetterTo = -1;
@@ -205,6 +234,13 @@ void player2Move(vector<string>& chessBoard) {
         }
         else{
             cout << "you did not enter a valid move\n";
+            continue;
+        }
+        if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
+            cout << "Player 2 promote to (Q Or N): ";
+            char promoteTo;
+            cin >> promoteTo;
+            chessBoard[numberTo][LetterTo] = promoteTo;
         }
     }
 }
@@ -239,14 +275,6 @@ bool gameOver(vector<string>& chessBoard){
 }
 bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
     if (numberFrom < 8 && numberTo < 8 && letterFrom < 8 && letterTo <8){
-        //int N = chessBoard[numberFrom + 1][letterFrom];
-        //int S = chessBoard[numberFrom - 1][letterFrom];
-        //int W = chessBoard[numberFrom][letterFrom - 1];
-        //int E = chessBoard[numberFrom][letterFrom +1];
-        //int NW = chessBoard[numberFrom + 1][ letterFrom - 1];
-        //int SW = chessBoard[numberFrom - 1][letterFrom - 1];
-        //int SE = chessBoard[numberFrom - 1][letterFrom + 1];
-        //int NE = chessBoard[numberFrom + 1][letterFrom + 1];  
 
         if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
             if (numberFrom < numberTo && letterFrom == letterTo){ // up
@@ -370,16 +398,16 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
         if (chessBoard[numberFrom][letterFrom]== 'p' ){
-            if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1){ // up two
+            if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1 && chessBoard[numberFrom + 2][letterFrom] == '.'){ // up two
                 return true;
             }
-            if (numberFrom + 1 == numberTo && letterFrom == letterTo){ // up
+            if (numberFrom + 1 == numberTo && letterFrom == letterTo && chessBoard[numberFrom + 1][letterFrom] == '.'){ // up
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo){ // up right
+            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo && chessBoard[numberFrom + 1][letterFrom + 1] != '.'){ // up right
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom -1 == letterTo){ // up left
+            else if (numberFrom + 1 == numberTo && letterFrom -1 == letterTo && chessBoard[numberFrom + 1][letterFrom - 1] != '.'){ // up left
                 return true;
             }
             else {
@@ -387,16 +415,16 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
         if (chessBoard[numberFrom][letterFrom]== 'P' ){
-            if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6){ // up two
+            if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6 && chessBoard[numberFrom - 2][letterFrom] == '.'){ // up two
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom == letterTo){ // up
+            else if (numberFrom - 1 == numberTo && letterFrom == letterTo && chessBoard[numberFrom - 1][letterFrom] != '.'){ // up
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo){ // up right
+            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo && chessBoard[numberFrom - 1][letterFrom + 1] != '.'){ // up right
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom -1 == letterTo){ // up left
+            else if (numberFrom - 1 == numberTo && letterFrom -1 == letterTo && chessBoard[numberFrom - 1][letterFrom - 1] != '.'){ // up left
                 return true;
             }
             else {
