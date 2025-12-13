@@ -50,154 +50,162 @@ void initalizeBoard(vector<string>& chessBoard) {
 }
 void player1Move(vector<string>& chessBoard) {
     string move;
-    cout << "Player 1, enter your move(format: e2 e4): "; 
-    getline(cin, move);
-    string letterFrom = move.substr(0,1);
-    string letterTo = move.substr(3,1);
+    int done = 0;
+    while (done == 0){
+        cout << "Player 1, enter your move(format: e2 e4): "; 
+        getline(cin, move);
+        string letterFrom = move.substr(0,1);
+        string letterTo = move.substr(3,1);
 
-    char FROM= move[1];
-    char TO= move[4];
-    int numberFrom = FROM - '0';
-    int numberTo = TO - '0';
-    numberFrom -= 1;
-    numberTo -= 1;
+        char FROM= move[1];
+        char TO= move[4];
+        int numberFrom = FROM - '0';
+        int numberTo = TO - '0';
+        numberFrom -= 1;
+        numberTo -= 1;
 
-    int LetterFrom = -1;
-    int LetterTo = -1;
-    switch (letterFrom[0]) {
-        case 'a': 
-            LetterFrom = 0;
-        break;
-        case 'b':
-            LetterFrom = 1;
-        break;
-        case 'c':
-            LetterFrom = 2;
-        break;
-        case 'd':
-            LetterFrom = 3;
-        break;
-        case 'e':
-            LetterFrom = 4;
-        break;
-        case 'f':
-            LetterFrom = 5;
-        break;
-        case 'g':
-            LetterFrom = 6;
-        break;
-        case 'h':
-            LetterFrom = 7;
-        break;    
-    }
-    switch(letterTo[0]) {
-        case 'a': 
-            LetterTo = 0;
-        break;
-        case 'b':
-            LetterTo = 1;
-        break;
-        case 'c':
-            LetterTo = 2;
-        break;
-        case 'd':
-            LetterTo = 3;
-        break;
-        case 'e':
-            LetterTo = 4;
-        break;
-        case 'f':
-            LetterTo = 5;
-        break;
-        case 'g':
-            LetterTo = 6;
-        break;
-        case 'h':
-            LetterTo = 7;
-        break;
-    }
-    if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
-        chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
-        chessBoard[numberFrom][LetterFrom] = '.';
-    }
-    else{
-        cout << "you did not enter a valid move\n";
+        int LetterFrom = -1;
+        int LetterTo = -1;
+        switch (letterFrom[0]) {
+            case 'a': 
+                LetterFrom = 0;
+            break;
+            case 'b':
+                LetterFrom = 1;
+            break;
+            case 'c':
+                LetterFrom = 2;
+            break;
+            case 'd':
+                LetterFrom = 3;
+            break;
+            case 'e':
+                LetterFrom = 4;
+            break;
+            case 'f':
+                LetterFrom = 5;
+            break;
+            case 'g':
+                LetterFrom = 6;
+            break;
+            case 'h':
+                LetterFrom = 7;
+            break;    
+        }
+        switch(letterTo[0]) {
+            case 'a': 
+                LetterTo = 0;
+            break;
+            case 'b':
+                LetterTo = 1;
+            break;
+            case 'c':
+                LetterTo = 2;
+            break;
+            case 'd':
+                LetterTo = 3;
+            break;
+            case 'e':
+                LetterTo = 4;
+            break;
+            case 'f':
+                LetterTo = 5;
+            break;
+            case 'g':
+                LetterTo = 6;
+            break;
+            case 'h':
+                LetterTo = 7;
+            break;
+        }
+        if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
+            chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
+            chessBoard[numberFrom][LetterFrom] = '.';
+            done = 1;
+        }
+        else{
+            cout << "you did not enter a valid move\n";
+        }
     }
 }
 void player2Move(vector<string>& chessBoard) {
     string move;
-    cout << "Player 2, enter your move(format: e2 e4): "; 
-    getline(cin, move);
-    string letterFrom = move.substr(0,1);
-    string letterTo = move.substr(3,1);
+    int done = 0;
+    while (done == 0){
+        cout << "Player 2, enter your move(format: e2 e4): "; 
+        getline(cin, move);
+        string letterFrom = move.substr(0,1);
+        string letterTo = move.substr(3,1);
 
-    char FROM= move[1];
-    char TO= move[4];
-    int numberFrom = FROM - '0';
-    int numberTo = TO - '0';
-    numberFrom -= 1;
-    numberTo -= 1;
+        char FROM= move[1];
+        char TO= move[4];
+        int numberFrom = FROM - '0';
+        int numberTo = TO - '0';
+        numberFrom -= 1;
+        numberTo -= 1;
 
-    int LetterFrom = -1;
-    int LetterTo = -1;
-    switch (letterFrom[0]) {
-        case 'a': 
-            LetterFrom = 0;
-        break;
-        case 'b':
-            LetterFrom = 1;
-        break;
-        case 'c':
-            LetterFrom = 2;
-        break;
-        case 'd':
-            LetterFrom = 3;
-        break;
-        case 'e':
-            LetterFrom = 4;
-        break;
-        case 'f':
-            LetterFrom = 5;
-        break;
-        case 'g':
-            LetterFrom = 6;
-        break;
-        case 'h':
-            LetterFrom = 7;
-        break;    
-    }
-    switch(letterTo[0]) {
-        case 'a': 
-            LetterTo = 0;
-        break;
-        case 'b':
-            LetterTo = 1;
-        break;
-        case 'c':
-            LetterTo = 2;
-        break;
-        case 'd':
-            LetterTo = 3;
-        break;
-        case 'e':
-            LetterTo = 4;
-        break;
-        case 'f':
-            LetterTo = 5;
-        break;
-        case 'g':
-            LetterTo = 6;
-        break;
-        case 'h':
-            LetterTo = 7;
-        break;    
-    }
-    if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
-        chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
-        chessBoard[numberFrom][LetterFrom] = '.';
-    }
-    else{
-        cout << "you did not enter a valid move\n";
+        int LetterFrom = -1;
+        int LetterTo = -1;
+        switch (letterFrom[0]) {
+            case 'a': 
+                LetterFrom = 0;
+            break;
+            case 'b':
+                LetterFrom = 1;
+            break;
+            case 'c':
+                LetterFrom = 2;
+            break;
+            case 'd':
+                LetterFrom = 3;
+            break;
+            case 'e':
+                LetterFrom = 4;
+            break;
+            case 'f':
+                LetterFrom = 5;
+            break;
+            case 'g':
+                LetterFrom = 6;
+            break;
+            case 'h':
+                LetterFrom = 7;
+            break;    
+        }
+        switch(letterTo[0]) {
+            case 'a': 
+                LetterTo = 0;
+            break;
+            case 'b':
+                LetterTo = 1;
+            break;
+            case 'c':
+                LetterTo = 2;
+            break;
+            case 'd':
+                LetterTo = 3;
+            break;
+            case 'e':
+                LetterTo = 4;
+            break;
+            case 'f':
+                LetterTo = 5;
+            break;
+            case 'g':
+                LetterTo = 6;
+            break;
+            case 'h':
+                LetterTo = 7;
+            break;
+        }
+        if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
+            chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
+            chessBoard[numberFrom][LetterFrom] = '.';
+            done = 1;
+        }
+        else{
+            cout << "you did not enter a valid move\n";
+        }
     }
 }
 bool gameOver(vector<string>& chessBoard){
@@ -361,7 +369,10 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 return false;
             }
         }
-        if (chessBoard[numberFrom][letterFrom]== 'p' || chessBoard[numberFrom][letterFrom]== 'P' ){
+        if (chessBoard[numberFrom][letterFrom]== 'p' ){
+            if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1){ // up two
+                return true;
+            }
             if (numberFrom + 1 == numberTo && letterFrom == letterTo){ // up
                 return true;
             }
@@ -369,6 +380,23 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 return true;
             }
             else if (numberFrom + 1 == numberTo && letterFrom -1 == letterTo){ // up left
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        if (chessBoard[numberFrom][letterFrom]== 'P' ){
+            if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6){ // up two
+                return true;
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom == letterTo){ // up
+                return true;
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo){ // up right
+                return true;
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom -1 == letterTo){ // up left
                 return true;
             }
             else {
