@@ -54,11 +54,10 @@ void player1Move(vector<string>& chessBoard) {
     string move;
     int done = 0;
     while (done == 0){
-
         cout << "Player 1, enter your move(format: e2 e4): "; 
         getline(cin, move);
-
-        if (move.length() != 5 || move[2] != ' ') {
+        
+        if (move.length() < 5) {
             cout << "you did not enter a valid move\n";
             continue;
         }
@@ -132,9 +131,9 @@ void player1Move(vector<string>& chessBoard) {
                 LetterTo = 7;
             break;
         }
-        if (Whitecheck(chessBoard)){
+        if (Blackcheck(chessBoard)){
             cout << "Player 1, you are in check!\n";
-            if (chessBoard[numberFrom][LetterFrom] != 'K'){
+            if (chessBoard[numberFrom][LetterFrom] != 'K' && chessBoard[numberFrom][LetterFrom] != 'k'){
                 cout << "you must move your king out of check\n";
                 continue;
             }
@@ -154,17 +153,17 @@ void player1Move(vector<string>& chessBoard) {
         if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
             chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
             chessBoard[numberFrom][LetterFrom] = '.';
-            if ((chessBoard[numberTo][LetterTo] == 'P') && (numberTo == 0 || numberTo == 7)){
-                cout << "Player 1 promote to (Q Or N): ";
-                char promoteTo;
-                cin >> promoteTo;
-                chessBoard[numberTo][LetterTo] = promoteTo;
-            }
             done = 1;
         }
         else{
                 cout << "you did not enter a valid move\n";
                 continue;
+            }
+            if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
+                cout << "Player 1 promote to (Q Or N): ";
+                char promoteTo;
+                cin >> promoteTo;
+                chessBoard[numberTo][LetterTo] = promoteTo;
             }
         }
     }
@@ -176,7 +175,7 @@ void player2Move(vector<string>& chessBoard) {
         cout << "Player 2, enter your move(format: e2 e4): "; 
         getline(cin, move);
 
-        if (move.length() != 5 || move[2] != ' ') {
+        if (move.length() < 5) {
             cout << "you did not enter a valid move\n";
             continue;
         }
@@ -250,40 +249,20 @@ void player2Move(vector<string>& chessBoard) {
                 LetterTo = 7;
             break;
         }
-        if (Blackcheck(chessBoard)){
-            cout << "Player 2, you are in check!\n";
-            if (chessBoard[numberFrom][LetterFrom] != 'k'){
-                cout << "you must move your king out of check\n";
-                continue;
-            }
-            else{
-                if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
-                    chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
-                    chessBoard[numberFrom][LetterFrom] = '.';
-                    done = 1;
-                }
-                else{
-                    cout << "you did not enter a valid move\n";
-                    continue;
-                }
-            }
-        }
-        else{
         if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
             chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
             chessBoard[numberFrom][LetterFrom] = '.';
-            if ((chessBoard[numberTo][LetterTo] == 'p') && (numberTo == 0 || numberTo == 7)){
-                cout << "Player 2 promote to (Q Or N): ";
-                char promoteTo;
-                cin >> promoteTo;
-                chessBoard[numberTo][LetterTo] = promoteTo;
-            }
             done = 1;
         }
         else{
             cout << "you did not enter a valid move\n";
             continue;
         }
+        if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
+            cout << "Player 2 promote to (Q Or N): ";
+            char promoteTo;
+            cin >> promoteTo;
+            chessBoard[numberTo][LetterTo] = promoteTo;
         }
     }
 }
@@ -320,35 +299,15 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
     if (numberFrom < 8 && numberTo < 8 && letterFrom < 8 && letterTo <8){
         if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
             if (numberFrom < numberTo && letterFrom == letterTo){ // up
-                for (int i = numberFrom + 1; i < numberTo; i++) {
-                    if (chessBoard[i][letterFrom] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (numberFrom > numberTo && letterFrom == letterTo){ // down
-                for (int i = numberFrom - 1; i > numberTo; i--) {
-                    if (chessBoard[i][letterFrom] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (letterFrom < letterTo && numberFrom == numberTo){ // right
-                for (int j = letterFrom + 1; j < letterTo; j++) {
-                    if (chessBoard[numberFrom][j] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (letterFrom > letterTo && numberFrom == numberTo){ // left
-                for (int j = letterFrom - 1; j > letterTo; j--) {
-                    if (chessBoard[numberFrom][j] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else {
@@ -386,43 +345,15 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
         }
         if (chessBoard[numberFrom][letterFrom]== 'b' || chessBoard[numberFrom][letterFrom]== 'B' ){
             if (numberFrom < numberTo && letterFrom > letterTo){ // up left
-                int i = numberFrom + 1, j = letterFrom - 1;
-                while (i < numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false;
-                    }
-                    i++; j--;
-                }
                 return true;
             }
             else if (numberFrom > numberTo && letterFrom > letterTo){ // down left
-                int i = numberFrom - 1, j = letterFrom - 1;
-                while (i > numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i--; j--;
-                }
                 return true;
             }
             else if (numberFrom > numberTo && letterFrom < letterTo){ // down right
-                int i = numberFrom - 1, j = letterFrom + 1;
-                while (i > numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i--; j++;
-                }
                 return true;
             }
             else if (numberFrom < numberTo && letterFrom < letterTo){ // up right
-                int i = numberFrom + 1, j = letterFrom + 1;
-                while (i < numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i++; j++;
-                }
                 return true;
             }
             else {
@@ -431,75 +362,27 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
         }
         if (chessBoard[numberFrom][letterFrom]== 'q' || chessBoard[numberFrom][letterFrom]== 'Q' ){
             if (numberFrom < numberTo && letterFrom == letterTo){ // up
-                for (int i = numberFrom + 1; i < numberTo; i++) {
-                    if (chessBoard[i][letterFrom] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (numberFrom > numberTo && letterFrom == letterTo){ // down
-                for (int i = numberFrom - 1; i > numberTo; i--) {
-                    if (chessBoard[i][letterFrom] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (numberFrom == numberTo && letterFrom < letterTo){ // right
-                for (int j = letterFrom + 1; j < letterTo; j++) {
-                    if (chessBoard[numberFrom][j] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
             else if (numberFrom == numberTo && letterFrom > letterTo){ // left
-                for (int j = letterFrom - 1; j > letterTo; j--) {
-                    if (chessBoard[numberFrom][j] != '.') {
-                        return false; 
-                    }
-                }
                 return true;
             }
-            else if (numberFrom < numberTo && letterFrom > letterTo){ // up left
-                int i = numberFrom + 1, j = letterFrom - 1;
-                while (i < numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i++; j--;
-                }
+            else if (numberFrom < numberTo && letterFrom > letterTo){ // up right
                 return true;
             }
-            else if (numberFrom > numberTo && letterFrom > letterTo){ // down left
-                int i = numberFrom - 1, j = letterFrom - 1;
-                while (i > numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i--; j--;
-                }
+            else if (numberFrom > numberTo && letterFrom > letterTo){ // down right
                 return true;
             }
-            else if (numberFrom > numberTo && letterFrom < letterTo){ // down right
-                int i = numberFrom - 1, j = letterFrom + 1;
-                while (i > numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i--; j++;
-                }
+            else if (numberFrom > numberTo && letterFrom < letterTo){ // down left
                 return true;
             }
-            else if (numberFrom < numberTo && letterFrom < letterTo){ // up right
-                int i = numberFrom + 1, j = letterFrom + 1;
-                while (i < numberTo) {
-                    if (chessBoard[i][j] != '.') {
-                        return false; 
-                    }
-                    i++; j++;
-                }
+            else if (numberFrom < numberTo && letterFrom < letterTo){ // up left
                 return true;
             }
             else {
@@ -536,16 +419,16 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
         if (chessBoard[numberFrom][letterFrom]== 'p' ){
-            if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1 && numberTo < 8 && chessBoard[numberFrom + 2][letterFrom] == '.'){ // up two
+            if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1 && chessBoard[numberFrom + 2][letterFrom] == '.'){ // up two
                 return true;
             }
-            if (numberFrom + 1 == numberTo && letterFrom == letterTo && numberTo < 8 && chessBoard[numberFrom + 1][letterFrom] == '.'){ // up
+            if (numberFrom + 1 == numberTo && letterFrom == letterTo && chessBoard[numberFrom + 1][letterFrom] == '.'){ // up
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo && numberTo < 8 && letterFrom + 1 < 8 && chessBoard[numberFrom + 1][letterFrom + 1] != '.'){ // up right - only if piece there
+            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo && chessBoard[numberFrom + 1][letterFrom + 1] != '.'){ // up right
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom - 1 == letterTo && numberTo < 8 && letterFrom - 1 >= 0 && chessBoard[numberFrom + 1][letterFrom - 1] != '.'){ // up left - only if piece there
+            else if (numberFrom + 1 == numberTo && letterFrom -1 == letterTo && chessBoard[numberFrom + 1][letterFrom - 1] != '.'){ // up left
                 return true;
             }
             else {
@@ -553,16 +436,16 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
         if (chessBoard[numberFrom][letterFrom]== 'P' ){
-            if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6 && numberTo >= 0 && chessBoard[numberFrom - 2][letterFrom] == '.'){ // down two
+            if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6 && chessBoard[numberFrom - 2][letterFrom] == '.'){ // up two
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom == letterTo && numberTo >= 0 && chessBoard[numberFrom - 1][letterFrom] == '.'){ // down
+            else if (numberFrom - 1 == numberTo && letterFrom == letterTo && chessBoard[numberFrom - 1][letterFrom] != '.'){ // up
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo && numberTo >= 0 && letterFrom + 1 < 8 && chessBoard[numberFrom - 1][letterFrom + 1] != '.'){ // down right - only if piece there
+            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo && chessBoard[numberFrom - 1][letterFrom + 1] != '.'){ // up right
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom - 1 == letterTo && numberTo >= 0 && letterFrom - 1 >= 0 && chessBoard[numberFrom - 1][letterFrom - 1] != '.'){ // down left - only if piece there
+            else if (numberFrom - 1 == numberTo && letterFrom -1 == letterTo && chessBoard[numberFrom - 1][letterFrom - 1] != '.'){ // up left
                 return true;
             }
             else {
@@ -575,12 +458,15 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
     }
     return false;
 }
+
+// make not in check for own peices
+
 bool Whitecheck(vector<string>& chessBoard){
     int WhitekingLetter = 0;
     int WhitekingNumber = 0;
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-            if (chessBoard[i][j] == 'K'){
+            if (chessBoard[i][j] == 'k'){
                 WhitekingLetter = j;
                 WhitekingNumber = i;
             }
@@ -588,9 +474,8 @@ bool Whitecheck(vector<string>& chessBoard){
     }
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-            char piece = chessBoard[i][j];
-            if (piece == 'r' || piece == 'n' || piece == 'b' || piece == 'q' || piece == 'p'){
-                if (legalMove(chessBoard, j, WhitekingLetter, i, WhitekingNumber)){
+            if (legalMove(chessBoard, j, WhitekingLetter, i, WhitekingNumber)){
+                if (chessBoard[i][j] != 'r' || chessBoard[i][j] != 'n' || chessBoard[i][j] != 'b' || chessBoard[i][j] != 'q' || chessBoard[i][j] != 'p'){
                     return true;
                 }
             }
@@ -603,7 +488,7 @@ bool Blackcheck(vector<string>& chessBoard){
     int BlackkingNumber = 0;
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-            if (chessBoard[i][j] == 'k'){
+            if (chessBoard[i][j] == 'K'){
                 BlackkingLetter = j;
                 BlackkingNumber = i;
             }
@@ -611,9 +496,8 @@ bool Blackcheck(vector<string>& chessBoard){
     }
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
-            char piece = chessBoard[i][j];
-            if (piece == 'R' || piece == 'N' || piece == 'B' || piece == 'Q' || piece == 'P'){
-                if (legalMove(chessBoard, j, BlackkingLetter, i, BlackkingNumber)){
+            if (legalMove(chessBoard, j, BlackkingLetter, i, BlackkingNumber)){
+                if (chessBoard[i][j] != 'R' || chessBoard[i][j] != 'N' || chessBoard[i][j] != 'B' || chessBoard[i][j] != 'Q' || chessBoard[i][j] != 'P'){
                     return true;
                 }
             }
@@ -621,3 +505,5 @@ bool Blackcheck(vector<string>& chessBoard){
     }
     return false;
 }
+
+// make not in check for own peices
