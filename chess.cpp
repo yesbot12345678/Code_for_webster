@@ -10,6 +10,8 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
 void player1Move(vector<string>& chessBoard);
 void player2Move(vector<string>& chessBoard);
 bool gameOver(vector<string>& chessBoard);
+bool Whitecheck(vector<string>& chessBoard);
+bool Blackcheck(vector<string>& chessBoard);
 int main()
 {    
     vector<string> chessBoard(8, string(8, '.'));
@@ -129,20 +131,40 @@ void player1Move(vector<string>& chessBoard) {
                 LetterTo = 7;
             break;
         }
+        if (Blackcheck(chessBoard)){
+            cout << "Player 1, you are in check!\n";
+            if (chessBoard[numberFrom][LetterFrom] != 'K' && chessBoard[numberFrom][LetterFrom] != 'k'){
+                cout << "you must move your king out of check\n";
+                continue;
+            }
+            else{
+                if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
+                    chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
+                    chessBoard[numberFrom][LetterFrom] = '.';
+                    done = 1;
+                }
+                else{
+                    cout << "you did not enter a valid move\n";
+                    continue;
+                }
+            }
+        }
+        else{
         if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
             chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
             chessBoard[numberFrom][LetterFrom] = '.';
             done = 1;
         }
         else{
-            cout << "you did not enter a valid move\n";
-            continue;
-        }
-        if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
-            cout << "Player 1 promote to (Q Or N): ";
-            char promoteTo;
-            cin >> promoteTo;
-            chessBoard[numberTo][LetterTo] = promoteTo;
+                cout << "you did not enter a valid move\n";
+                continue;
+            }
+            if (chessBoard[numberFrom][LetterFrom] == 'P' || chessBoard[numberFrom][LetterFrom] == 'p' && numberTo == 0 || numberTo == 7){
+                cout << "Player 1 promote to (Q Or N): ";
+                char promoteTo;
+                cin >> promoteTo;
+                chessBoard[numberTo][LetterTo] = promoteTo;
+            }
         }
     }
 }
@@ -275,7 +297,6 @@ bool gameOver(vector<string>& chessBoard){
 }
 bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
     if (numberFrom < 8 && numberTo < 8 && letterFrom < 8 && letterTo <8){
-
         if (chessBoard[numberFrom][letterFrom]== 'r' || chessBoard[numberFrom][letterFrom]== 'R' ){
             if (numberFrom < numberTo && letterFrom == letterTo){ // up
                 return true;
@@ -432,8 +453,57 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
     }
-    else {
+    else{
         return false;
     }
     return false;
 }
+
+// make not in check for own peices
+
+bool Whitecheck(vector<string>& chessBoard){
+    int WhitekingLetter = 0;
+    int WhitekingNumber = 0;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (chessBoard[i][j] == 'k'){
+                WhitekingLetter = j;
+                WhitekingNumber = i;
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (legalMove(chessBoard, j, WhitekingLetter, i, WhitekingNumber)){
+                if (chessBoard[i][j] != 'r' || chessBoard[i][j] != 'n' || chessBoard[i][j] != 'b' || chessBoard[i][j] != 'q' || chessBoard[i][j] != 'p'){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+bool Blackcheck(vector<string>& chessBoard){
+    int BlackkingLetter = 0;
+    int BlackkingNumber = 0;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (chessBoard[i][j] == 'K'){
+                BlackkingLetter = j;
+                BlackkingNumber = i;
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (legalMove(chessBoard, j, BlackkingLetter, i, BlackkingNumber)){
+                if (chessBoard[i][j] != 'R' || chessBoard[i][j] != 'N' || chessBoard[i][j] != 'B' || chessBoard[i][j] != 'Q' || chessBoard[i][j] != 'P'){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+// make not in check for own peices
