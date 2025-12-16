@@ -21,6 +21,7 @@ int main()
     while (!gameover) {
         displayBoard(chessBoard);
         player1Move(chessBoard);
+        system("clear");
         displayBoard(chessBoard);
         gameover = gameOver(chessBoard);
         if (!gameover){
@@ -29,6 +30,7 @@ int main()
             gameOver(chessBoard);
             gameover = gameOver(chessBoard);
         }
+        system("clear");
     }
     gameOver(chessBoard);
     return 0;
@@ -401,28 +403,28 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             }
         }
         if (chessBoard[numberFrom][letterFrom]== 'n' || chessBoard[numberFrom][letterFrom]== 'N' ){
-            if (numberFrom + 3 == numberTo && letterFrom - 1 == letterTo){ // up left
+            if (numberFrom + 2 == numberTo && letterFrom - 1 == letterTo){ // up left
                 return true;
             }
-            else if (numberFrom + 3 == numberTo && letterFrom + 1 == letterTo){ // up right
+            else if (numberFrom + 2 == numberTo && letterFrom + 1 == letterTo){ // up right
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom + 3 == letterTo){ // right up
+            else if (numberFrom + 1 == numberTo && letterFrom + 2 == letterTo){ // right up
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom + 3 == letterTo){ // right down
+            else if (numberFrom - 1 == numberTo && letterFrom + 2 == letterTo){ // right down
                 return true;
             }
-            else if (numberFrom - 3 == numberTo && letterFrom + 1 == letterTo){ // down right
+            else if (numberFrom - 2 == numberTo && letterFrom + 1 == letterTo){ // down right
                 return true;
             }
-            else if (numberFrom - 3 == numberTo && letterFrom - 1 == letterTo){ // down left
+            else if (numberFrom - 2 == numberTo && letterFrom - 1 == letterTo){ // down left
                 return true;
             }
-            else if (numberFrom + 1 == numberTo && letterFrom - 3 == letterTo){ // left up
+            else if (numberFrom + 1 == numberTo && letterFrom - 2 == letterTo){ // left up
                 return true;
             }
-            else if (numberFrom - 1 == numberTo && letterFrom - 3 == letterTo){ // left down
+            else if (numberFrom - 1 == numberTo && letterFrom - 2 == letterTo){ // left down
                 return true;
             }
             else {
@@ -434,7 +436,7 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 int i = numberFrom + 1, j = letterFrom - 1;
                 while (i < numberTo && j >= 0) {
                     if (chessBoard[i][j] != '.') {
-                        return false;
+                        return false; 
                     }
                     i++; j--;
                 }
@@ -601,6 +603,12 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             else if (numberFrom + 1 == numberTo && letterFrom - 1 == letterTo && numberTo < 8 && letterFrom - 1 >= 0 && chessBoard[numberFrom + 1][letterFrom - 1] != '.'){ // up left - only if piece there
                 return true;
             }
+            else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo && numberTo < 8 && letterFrom + 1 < 8 && chessBoard[numberFrom][letterFrom + 1] == 'P' && numberFrom == 4){ // en passant
+                return true;
+            }
+            else if (numberFrom + 1 == numberTo && letterFrom - 1 == letterTo && numberTo < 8 && letterFrom - 1 >= 0 && chessBoard[numberFrom][letterFrom - 1] == 'P' && numberFrom == 4){ // en passant
+                return true;
+            }
             else {
                 return false;
             }
@@ -616,6 +624,12 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 return true;
             }
             else if (numberFrom - 1 == numberTo && letterFrom - 1 == letterTo && numberTo >= 0 && letterFrom - 1 >= 0 && chessBoard[numberFrom - 1][letterFrom - 1] != '.'){ // down left - only if piece there
+                return true;
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom + 1 == letterTo && numberTo >= 0 && letterFrom + 1 < 8 && chessBoard[numberFrom][letterFrom + 1] == 'p' && numberFrom == 5){ // en passant
+                return true;
+            }
+            else if (numberFrom - 1 == numberTo && letterFrom - 1 == letterTo && numberTo >= 0 && letterFrom - 1 >= 0 && chessBoard[numberFrom][letterFrom - 1] == 'p' && numberFrom == 5){ // en passant
                 return true;
             }
             else {
