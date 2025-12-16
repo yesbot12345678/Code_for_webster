@@ -6,26 +6,31 @@
 using namespace std;
 
 void displayBoard(const vector<string>& chessBoard);
-void initalizeBoard(vector<string>& chessBoard);
+void initalizeBoard(vector<string>& chessBoard, vector<string>& storeBoard);
 bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int numberFrom, int numberTo);
-void player1Move(vector<string>& chessBoard);
-void player2Move(vector<string>& chessBoard);
+void player1Move(vector<string>& chessBoard, vector<string>& storeBoard);
+void player2Move(vector<string>& chessBoard, vector<string>& storeBoard);
 bool gameOver(vector<string>& chessBoard);
 bool Whitecheck(vector<string>& chessBoard);
 bool Blackcheck(vector<string>& chessBoard);
+bool outCheckWhite(vector<string>& storeBoard, int letterFrom, int letterTo, int numberFrom, int numberTo);
+bool outCheckBlack(vector<string>& storeBoard, int letterFrom, int letterTo, int numberFrom, int numberTo);
+
 int main()
 {    
     vector<string> chessBoard(8, string(8, '.'));
-    initalizeBoard(chessBoard);
+    vector<string> storeBoard(8, string(8, '.'));
+    initalizeBoard(chessBoard, storeBoard);
+
     bool gameover = gameOver(chessBoard);
     while (!gameover) {
         displayBoard(chessBoard);
-        player1Move(chessBoard);
+        player1Move(chessBoard, storeBoard);
         system("clear");
         displayBoard(chessBoard);
         gameover = gameOver(chessBoard);
         if (!gameover){
-            player2Move(chessBoard);
+            player2Move(chessBoard, storeBoard);
             displayBoard(chessBoard);
             gameOver(chessBoard);
             gameover = gameOver(chessBoard);
@@ -39,21 +44,23 @@ void displayBoard(const vector<string>& chessBoard) {
     cout << "   a b c d e f g h\n";
     cout << " +-----------------+\n";
     for(int i = 0; i < 8; ++i) {
-        cout << i + 1 << "| ";
+        cout << 8 - i << "| ";
         for(int j = 0; j < 8; ++j) {
-            cout << chessBoard[i][j] << " ";
+            cout << chessBoard[(7 - i)][j] << " ";
         }
         cout << "|\n";
     }
     cout << " +-----------------+\n";
 }
-void initalizeBoard(vector<string>& chessBoard) {
-    chessBoard[0] = "rnbqkbnr";
-    chessBoard[1] = "pppppppp";
-    chessBoard[6] = "PPPPPPPP";
-    chessBoard[7] = "RNBQKBNR";
+void initalizeBoard(vector<string>& chessBoard, vector<string>& storeBoard) {
+    chessBoard[6] = "rnbqkbnr";
+    chessBoard[7] = "pppppppp";
+    chessBoard[1] = "PPPPPPPP";
+    chessBoard[0] = "RNBQKBNR";
+
+    storeBoard = chessBoard;
 }
-void player1Move(vector<string>& chessBoard) {
+void player1Move(vector<string>& chessBoard, vector<string>& storeBoard) {
     string move;
     int done = 0;
     while (done == 0){
@@ -159,14 +166,17 @@ void player1Move(vector<string>& chessBoard) {
 
         if (Whitecheck(chessBoard)){
             cout << "Player 1, you are in check!\n";
-            if (chessBoard[numberFrom][LetterFrom] != 'K'){
-                cout << "you must move your king out of check\n";
+            if (outCheckWhite(storeBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
+                cout << "you must move out of check\n";
                 continue;
             }
             else{
                 if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
                     chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
                     chessBoard[numberFrom][LetterFrom] = '.';
+
+                    storeBoard = chessBoard;
+
                     done = 1;
                 }
                 else{
@@ -179,11 +189,28 @@ void player1Move(vector<string>& chessBoard) {
         if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
             chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
             chessBoard[numberFrom][LetterFrom] = '.';
+
+            storeBoard = chessBoard;
+
             if ((chessBoard[numberTo][LetterTo] == 'P') && (numberTo == 0 || numberTo == 7)){
                 cout << "Player 1 promote to (Q Or N): ";
                 char promoteTo;
                 cin >> promoteTo;
                 chessBoard[numberTo][LetterTo] = promoteTo;
+
+                storeBoard = chessBoard;
+            }
+            if (numberFrom == numberTo && LetterFrom + 2 == LetterTo && chessBoard[7][4] == 'k' && chessBoard[7][7] == 'r'){                    
+                chessBoard[7][6] = chessBoard[7][4];
+                chessBoard[7][5] = chessBoard[7][7];
+                chessBoard[7][4] = '.';
+                chessBoard[7][7] = '.';
+            }
+            else if (numberFrom == numberTo && LetterFrom - 3 == LetterTo && chessBoard[7][4] == 'k' && chessBoard[7][7] == 'r'){
+                chessBoard[7][2] = chessBoard[7][4];
+                chessBoard[7][2] = chessBoard[7][0];
+                chessBoard[7][4] = '.';
+                chessBoard[7][0] = '.';
             }
             done = 1;
         }
@@ -194,7 +221,7 @@ void player1Move(vector<string>& chessBoard) {
         }
     }
 }
-void player2Move(vector<string>& chessBoard) {
+void player2Move(vector<string>& chessBoard, vector<string>& storeBoard) {
     string move;
     int done = 0;
     while (done == 0){
@@ -299,14 +326,17 @@ void player2Move(vector<string>& chessBoard) {
 
         if (Blackcheck(chessBoard)){
             cout << "Player 2, you are in check!\n";
-            if (chessBoard[numberFrom][LetterFrom] != 'k'){
-                cout << "you must move your king out of check\n";
+            if (outCheckBlack(storeBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
+                cout << "you must move out of check\n";
                 continue;
             }
             else{
                 if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
                     chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
                     chessBoard[numberFrom][LetterFrom] = '.';
+
+                    storeBoard = chessBoard;
+                    
                     done = 1;
                 }
                 else{
@@ -319,11 +349,29 @@ void player2Move(vector<string>& chessBoard) {
         if (LetterFrom >= 0 && LetterTo >= 0 && legalMove(chessBoard, LetterFrom, LetterTo, numberFrom, numberTo)){
             chessBoard[numberTo][LetterTo] = chessBoard[numberFrom][LetterFrom];
             chessBoard[numberFrom][LetterFrom] = '.';
+
+            storeBoard = chessBoard;
+
             if ((chessBoard[numberTo][LetterTo] == 'p') && (numberTo == 0 || numberTo == 7)){
                 cout << "Player 2 promote to (Q Or N): ";
                 char promoteTo;
                 cin >> promoteTo;
                 chessBoard[numberTo][LetterTo] = promoteTo;
+
+                storeBoard = chessBoard;
+
+            }
+            if (numberFrom == numberTo && LetterFrom + 2 == LetterTo && chessBoard[0][4] == 'k' && chessBoard[0][7] == 'r'){                    
+                chessBoard[0][6] = chessBoard[0][4];
+                chessBoard[0][5] = chessBoard[0][7];
+                chessBoard[0][4] = '.';
+                chessBoard[0][7] = '.';
+            }
+            else if (numberFrom == numberTo && LetterFrom - 3 == LetterTo && chessBoard[0][4] == 'k' && chessBoard[0][7] == 'r'){
+                chessBoard[0][2] = chessBoard[0][4];
+                chessBoard[0][2] = chessBoard[0][0];
+                chessBoard[0][4] = '.';
+                chessBoard[0][0] = '.';
             }
             done = 1;
         }
@@ -586,6 +634,18 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
             else if (numberFrom + 1 == numberTo && letterFrom + 1 == letterTo){ // up right
                 return true;
             }
+            else if (numberFrom == numberTo && letterFrom + 2 == letterTo && chessBoard[0][4] == 'k' && chessBoard[0][7] == 'r'){
+                return true;
+            }
+            else if (numberFrom == numberTo && letterFrom - 3 == letterTo && chessBoard[0][4] == 'k' && chessBoard[0][7] == 'r'){
+                return true;
+            }
+            else if (numberFrom == numberTo && letterFrom + 2 == letterTo && chessBoard[7][4] == 'k' && chessBoard[7][7] == 'r'){
+                return true;
+            }
+            else if (numberFrom == numberTo && letterFrom - 3 == letterTo && chessBoard[7][4] == 'k' && chessBoard[7][7] == 'r'){
+                return true;
+            }
             else {
                 return false;
             }
@@ -688,3 +748,66 @@ bool Blackcheck(vector<string>& chessBoard){
     }
     return false;
 }
+bool outCheckWhite(vector<string>& storeBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
+
+    storeBoard[numberTo][letterTo] = storeBoard[numberFrom][letterFrom];
+    storeBoard[numberFrom][letterFrom] = '.';
+
+    int WhitekingLetter = 0;
+    int WhitekingNumber = 0;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            if (storeBoard[i][j] == 'K'){
+                WhitekingLetter = j;
+                WhitekingNumber = i;
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            char piece = storeBoard[i][j];
+            if (piece == 'r' || piece == 'n' || piece == 'b' || piece == 'q' || piece == 'p'){
+                if (legalMove(storeBoard, j, WhitekingLetter, i, WhitekingNumber)){
+                    storeBoard[numberFrom][letterFrom] = storeBoard[numberTo][letterTo];
+                    storeBoard[numberTo][letterTo] = '.';
+                    return true;
+                }
+            }
+        }
+    }
+    storeBoard[numberFrom][letterFrom] = storeBoard[numberTo][letterTo];
+    storeBoard[numberTo][letterTo] = '.';
+    return false;
+}
+bool outCheckBlack(vector<string>& storeBoard, int letterFrom, int letterTo, int numberFrom, int numberTo){
+
+    storeBoard[numberTo][letterTo] = storeBoard[numberFrom][letterFrom];
+    storeBoard[numberFrom][letterFrom] = '.';
+
+    int WhitekingLetter = 0;
+    int WhitekingNumber = 0;
+    for(int i = 0; i < 8; i++){              
+        for(int j = 0; j < 8; j++){
+            if (storeBoard[i][j] == 'K'){
+                WhitekingLetter = j;
+                WhitekingNumber = i;
+            }
+        }
+    }
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            char piece = storeBoard[i][j];
+            if (piece == 'r' || piece == 'n' || piece == 'b' || piece == 'q' || piece == 'p'){
+                if (legalMove(storeBoard, j, WhitekingLetter, i, WhitekingNumber)){
+                    storeBoard[numberFrom][letterFrom] = storeBoard[numberTo][letterTo];
+                    storeBoard[numberTo][letterTo] = '.';
+                    return true;
+                }
+            }
+        }
+    }
+    storeBoard[numberFrom][letterFrom] = storeBoard[numberTo][letterTo];
+    storeBoard[numberTo][letterTo] = '.';
+    return false;
+}
+
