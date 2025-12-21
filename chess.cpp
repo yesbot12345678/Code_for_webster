@@ -53,8 +53,8 @@ void displayBoard(const vector<string>& chessBoard) {
     cout << " +-----------------+\n";
 }
 void initalizeBoard(vector<string>& chessBoard, vector<string>& storeBoard) {
-    chessBoard[6] = "rnbqkbnr";
-    chessBoard[7] = "pppppppp";
+    chessBoard[7] = "rnbqkbnr";
+    chessBoard[6] = "pppppppp";
     chessBoard[1] = "PPPPPPPP";
     chessBoard[0] = "RNBQKBNR";
 
@@ -650,7 +650,7 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 return false;
             }
         }
-        if (chessBoard[numberFrom][letterFrom]== 'p' ){
+        if (chessBoard[numberFrom][letterFrom]== 'P' ){
             if (numberFrom + 2 == numberTo && letterFrom == letterTo && numberFrom == 1 && numberTo < 8 && chessBoard[numberFrom + 2][letterFrom] == '.'){ // up two
                 return true;
             }
@@ -673,7 +673,7 @@ bool legalMove(vector<string>& chessBoard, int letterFrom, int letterTo, int num
                 return false;
             }
         }
-        if (chessBoard[numberFrom][letterFrom]== 'P' ){
+        if (chessBoard[numberFrom][letterFrom]== 'p' ){
             if (numberFrom - 2 == numberTo && letterFrom == letterTo && numberFrom == 6 && numberTo >= 0 && chessBoard[numberFrom - 2][letterFrom] == '.'){ // down two
                 return true;
             }
