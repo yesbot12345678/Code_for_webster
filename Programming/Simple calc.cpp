@@ -48,3 +48,4 @@ cin >> numB;
 
 answer = numA / numB;
 cout << "A / B =" << answer << "\n";
+}
