@@ -1,5 +1,5 @@
-a = 0
-while (a < 5):
+a = 1
+while (a < 5 and a > 0):
     print("Enter the number corisponding to the operation you want to perform:")
     print("1. Addition")
     print("2. Subtraction")
