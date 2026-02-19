@@ -5,7 +5,7 @@ c=0
 t=0
 while l==0:
     Com = random.randint(1,4) #chooses a rand num from 1 to 3
-    Player = str(input("enter rock, paper, or scissors (or leave to exit): "))
+    Player = str(input("enter rock, paper, scissors, or leave to exit: "))
     if Player == "leave" or Player == "Leave": # if player chose to exit
         print("exiting now")
         l=1 # setting the var to 1 so it fails the while loop check
