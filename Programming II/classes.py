@@ -17,3 +17,9 @@ student2 = student("Jane", "Smith", "6789", 12) #creating student 2
 print(student1.display())
 print(student2.display())
 
+class instance:
+    pass
+
+instance1 = instance()
+instance1.name = "Instance 1"
+print(instance1.name)
