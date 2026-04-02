@@ -15,9 +15,7 @@ class student: #creating the class
 
 
 student1 = student("John", "Doe", "1234") #creating student 1
-student2 = student("Jane", "Smith", "6789") #creating student 2
-
-student1.display() #displaying student 1's information
+student2 = student("Jane", "Smith", "6789") #creating student 2student1.display() #displaying student 1's information
 student2.display() #displaying student 2's information
 
 student1.default_gradelevel = 10 #changing the default grade level for student 1
