@@ -6,6 +6,12 @@ class employee:
         self.last_name = last_name
         self.emp_id = emp_id
         self.yearly_pay = yearly_pay
+    def print_info(self):
+        print(f"Employee Name: {self.first_name} {self.last_name}")
+        print(f"Employee ID: {self.emp_id}")
+        print(f"Yearly Pay: {self.yearly_pay}")
+        print(f"Pay Raise: {self.pay_raise}")
+        print(f"New Yearly Pay: {self.yearly_pay * self.pay_raise}")
 #developer class
 class develper(employee):
     pay_raise = 1.05
@@ -24,6 +30,6 @@ develper1 = develper("Jane", "Smith", 456)
 manager1 = manager("Bob", "Johnson", 789)
 
 
-print(develper1.pay_raise)
-print(manager1.pay_raise)
-print(help(develper))
+develper1.print_info()
+manager1.print_info()
+#print(help(develper))
