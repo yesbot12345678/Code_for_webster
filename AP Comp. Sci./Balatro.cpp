@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
 string Jokers[] = 
@@ -23,30 +25,107 @@ string Jokers[] =
         "cartomancer", "astronomer", "brunt joker", "bootstraps", "canio", "triboulet", "yorick", "chicot", "perkeo" 
 };
 
-string decks[] = {};
+string decks[] = 
+{
+        "red", "blue", "yellow", "green", "black", "magic", "nebula", "ghost", "abandoned", "checkered", "zodiac", "painted", "anaglyph", "plasma", "erratic"
+};
 
-string vouchers[] = {};
+string vouchers_base[] = 
+{
+        "overstock", "clearance sale", "hone", "reroll surplus", "crystal ball", "telescope", "grabber", "wasteful", "tarrot merchant", "planet merchant", 
+         "seed money", "blank", "magic trick", "hieroglyph", "director's cut", "paint brush"
+};
 
-string blinds[] = {};
+string vouchers_upgrade[] = 
+{
+        "overstock plus", "liquidation", "glow up", "reroll glut", "omen globe", "observatory", "nacho tong", "recyclomancy", "tarrot tycoon", "planet tycoon", 
+        "money tree", "antomatter", "illusion", "petroglyph", "retcon", "palette"
+};
 
-string tags[] = {};
+string base_blinds[] = 
+{
+        "small", "big"
+};
 
-string booster_packs[] = {};
+string boss_blinds[] = 
+{
+        "hook", "ox", "house", "wall", "wheel", "arm", "club", "fish", "psychic", "goad", "water", "window", "manacle", "eye", "mouth", "plant",
+        "serpent", "pillar", "needle", "head", "tooth", "flint", "mark"
+};
 
-string tarrot[] = {};
+string ante8[] = 
+{
+        "amber acorn", "verdant leaf", "violet vessel", "crimson heart", "cerulean bell"
+};
 
-string planet[] = {};
+string tags[] = 
+{
+        "uncommon", "rare", "negative", "foil", "holographic", "polychome", "invesment", "voucher", "boss", "standard", "charm", "meteor",
+        "buffoon", "handy", "garbage", "etheral", "coupon", "double", "juggle", "d6", "top-up", "speed", "orbital", "economy"
+};
 
-string spectral[] = {};
+string booster_packs[] = 
+{
+        "arcana","arcana","arcana","arcana","jumbo arcana","jumbo arcana","mega arcana","mega arcana",
+        "celestial","celestial","celestial","celestial","jumbo celestial","jumbo celestial","mega celestial","mega celestial",
+        "standard","standard","standard","standard","jumbo standard","jumbo standard","mega standard","mega standard",
+        "buffoon","buffoon","jumbo buffoon","mega buffoon",
+        "spectral","spectral","jumbo spectral","mega spectral"
+};
 
-string edditions[] = {};
+string tarrot[] = 
+{
+        "fool", "magician", "high priestess", "empress", "emperor", "hierophant", "lovers", "chariot", "justice", "hermit",
+        "wheel of fortune", "strength", "hanged man", "death", "temperance", "devil", "tower", "star", "moon", "sun", "judgement", "world"
+};
 
-string seals[] = {};
+string planet[] = 
+{
+        "murcury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto", "planet x", " ceres", "eris"
+};
 
-string enhancements[] = {};
+string spectral[] = 
+{
+        "familiar", "grim", "incantation", "tailsman", "aura", "wraith", "sigil", "ouija", "ectoplasm", "immolate", "ankh",
+        "deja vu", "hex", "terance", "medium", "cryptid", "soul", "black hole"
+};
 
+string edditions[] = 
+{
+        "base", "foil", "holographic", "polychrome", "negative"
+};
+
+string seals[] = 
+{
+        "gold", "red", "blue", "purple"
+};
+
+string enhancements[] = 
+{
+        "bonus", "mult", "wild", "glass", "steel", "stone", "gold", "lucky"
+};
+
+
+void Print_Shop(){
+        vector<string> Shop(50, string(100, '.'));
+        for (int i = 0; i < 50; i++){
+            for (int j = 0; j < 100; j++){
+                Shop[i][j] = '.';
+            }
+        }
+        return 0;
+}
 
 int main(){
 
-    
+    Print_Shop();
+    return 0;
+}
+
+void Print_Blind_Select(){
+        
+}
+
+void Print_In_Game(){
+        
 }
