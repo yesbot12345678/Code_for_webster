@@ -113,7 +113,6 @@ void Print_Shop(){
                 Shop[i][j] = '.';
             }
         }
-        return 0;
 }
 
 int main(){
