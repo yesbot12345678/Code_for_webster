@@ -107,11 +107,12 @@ string enhancements[] =
 
 
 void Print_Shop(){
-        vector<string> Shop(50, string(100, '.'));
-        for (int i = 0; i < 50; i++){
+        vector<string> Shop(20, string(100, "[]"));
+        for (int i = 0; i < 20; i++){
             for (int j = 0; j < 100; j++){
-                Shop[i][j] = '.';
+                cout << Shop[i][j];
             }
+            cout << endl;
         }
 }
 
