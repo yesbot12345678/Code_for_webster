@@ -1,14 +1,19 @@
-numerator = input("Enter a number for the numurator ( top ): ")
-denominator = input("Enter a number for the denominator ( bottom ): ")
+
 store_n= []
 store_d= []
 factors_n = {}
 factors_d = {}
+store_d = []
+common_factors = []
+
+numerator = input("Enter a number for the numurator ( top ): ")
+denominator = input("Enter a number for the denominator ( bottom ): ")
+
 for i in range(1, int(numerator) + 1):
     if int(numerator) % i == 0:
         store_n.append(i)
 
-store_d = []
+
 for i in range(1, int(denominator) + 1):
     if int(denominator) % i == 0:
         store_d.append(i)
@@ -31,8 +36,6 @@ if len(store_n) < len(store_d):
     x = True
 else:
     x = False
-
-common_factors = []
 
 if x:
     for i in range(len(store_n)):
