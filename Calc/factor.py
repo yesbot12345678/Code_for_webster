@@ -11,10 +11,10 @@ while True:
     for i in range(len(factors)):
         first = factors[i]
 
-        if first != factors[-1]:
-            for j in range(i + 1, len(factors)):
-                second = factors[j]
+  
+        for j in range(i + 1, len(factors)):
+            second = factors[j]
 
-                if first * second == number:
-                    print(first, ":", second)
+            if first * second == number:
+                 print(first, ":", second)
                     
