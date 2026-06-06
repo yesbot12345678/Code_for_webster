@@ -53,5 +53,5 @@ for i in range(len(common_factors)):
 
 numerator = float(numerator) / float(largest)
 denominator = float(denominator) / float(largest)
-print(f"{numerator}/{denominator}")
+print(numerator + "/" + denominator)
 
