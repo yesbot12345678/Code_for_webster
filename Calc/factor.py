@@ -9,4 +9,4 @@ for i in range(len(store)):
     if store[i] != store[len(store) - 1]:
         for j in range(i + 1, len(store)):
             if store[i] * store[j] == int(n_factor):
-                print(f"{store[i]} : {store[j]}")
+                print(store[i] + " : " + store[j])
