@@ -1,12 +1,20 @@
-n_factor = input("Enter a number to find its factors: ")
-store = []
-print("The factors of", n_factor, "are:")
-for i in range(1, int(n_factor) + 1):
-    if int(n_factor) % i == 0:
-        store.append(i)
+while True:
+    number = int(input("Enter a number: "))
+    factors = []
 
-for i in range(len(store)):
-    if store[i] != store[len(store) - 1]:
-        for j in range(i + 1, len(store)):
-            if store[i] * store[j] == int(n_factor):
-                print(store[i] + " : " + store[j])
+    print("Factors of", number, ":")
+
+    for i in range(1, number + 1):
+        if number % i == 0:
+            factors.append(i)
+
+    for i in range(len(factors)):
+        first = factors[i]
+
+        if first != factors[-1]:
+            for j in range(i + 1, len(factors)):
+                second = factors[j]
+
+                if first * second == number:
+                    print(first, ":", second)
+                    
