@@ -1,4 +1,4 @@
 # School
-This is all of the coding assignments we have done for Mr. Webster's class aswell as some personal projects that i make when i am bored. If you are looking at my code only the .cpp, .py, and .html files in programming, programming II, Comp Sci., and AP Comp. Sci. folders are relevant. Updates to this repository have ended because i am never taking another webster class again
+This is all of the coding assignments we have done for Mr. Webster's class. If you are looking at my code only the .cpp, .py, and .html files in programming, programming II, Comp Sci., and AP Comp. Sci. Updates to this repository have ended because i am never taking another webster class again
 
 
